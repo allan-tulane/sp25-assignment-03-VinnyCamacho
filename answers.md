@@ -21,4 +21,21 @@ While N > 0:
 
 2b. Let C(N) = minimum coins to make change N. Then:
 C(N) = min(C(N-di) + 1) where di is a coin denomination used by a given bank.
-If the way to make change with the fewest coins uses a denomination di, then the subproblem is now N - di, which should have an optimal solution given the denominations available
+For each denomination di that is available at a given bank, you must then solve the subproblem N-di and add 1 for the coin used (di)
+The min() chooses the best of these options. This is the optimal substructure because the solution for N depends on solving subproblems N - di, and min() chooses the most optimal (fewest coins). 
+
+2c. bottom up dynamic programing implementation: 
+
+dp = [∞] * (N + 1) #instantiate an array to store coins 
+dp[0] = 0 #base case: 0, optimal solution is just 0 coins.
+
+for i in range(1, N + 1): 
+    for coin in denominations:
+        if coin <= i:
+            dp[i] = min(dp[i], dp[i - coin] + 1) #dp[i] is the array of coins used
+
+Work: O(n^2)
+Span: O(n)
+
+
+
